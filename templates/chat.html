@@ -1,81 +1,254 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Chatbot</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"/>
-	</head>
-	
-	
-	<body>
-		<div class="container-fluid h-100">
-			<div class="row justify-content-center h-100">		
-				<div class="col-md-8 col-xl-6 chat">
-					<div class="card">
-						<div class="card-header msg_head">
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img">
-									<!-- <img src="https://www.prdistribution.com/spirit/uploads/pressreleases/2019/newsreleases/d83341deb75c4c4f6b113f27b1e42cd8-chatbot-florence-already-helps-thousands-of-patients-to-remember-their-medication.png" class="rounded-circle user_img"> -->
-									<span class="online_icon"></span>
-								</div>
-								<div class="user_info">
-									<span>Medical Chatbot</span>
-									<p>Ask me anything!</p>
-								</div>
-							</div>
+<head>
+	<title>Medical Chatbot</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<style>
+	/* GLOBAL */
+	body,html{
+		height: 100%;
+		margin: 0;
+		background: linear-gradient(to right, #26333d, #323741, #21214e);
+		font-family: 'Segoe UI', sans-serif;
+	}
+
+	.chat{
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+
+	.card{
+		height: 500px;
+		border-radius: 15px !important;
+		background-color: rgba(0,0,0,0.4) !important;
+	}
+
+	.msg_card_body{
+		overflow-y: auto;
+		height: 350px;
+		scroll-behavior: smooth;
+	}
+
+	.card-header, .card-footer{
+		border: none !important;
+	}
+
+	.type_msg{
+		background-color: rgba(0,0,0,0.3) !important;
+		border:0 !important;
+		color:white !important;
+		height: 60px;
+	}
+
+	.send_btn{
+		background-color: rgba(0,0,0,0.3);
+		border:0;
+		color:white;
+		cursor:pointer;
+	}
+
+	.user_img{
+		height: 70px;
+		width: 70px;
+		border-radius: 50%;
+	}
+
+	.user_img_msg{
+		height: 40px;
+		width: 40px;
+		border-radius: 50%;
+	}
+
+	.img_cont{
+		position: relative;
+	}
+
+	.online_icon{
+		position: absolute;
+		height: 12px;
+		width:12px;
+		background-color: #4cd137;
+		border-radius: 50%;
+		bottom: 5px;
+		right: 5px;
+		border:1px solid white;
+	}
+
+	.msg_cotainer{
+		background: #3b82f6;
+		padding: 10px;
+		border-radius: 15px;
+		color: white;
+		max-width: 70%;
+		position: relative;
+	}
+
+	.msg_cotainer_send{
+		background: #22c55e;
+		padding: 10px;
+		border-radius: 15px;
+		color: white;
+		max-width: 70%;
+		position: relative;
+	}
+
+	.msg_time, .msg_time_send{
+		font-size: 10px;
+		position: absolute;
+		bottom: -15px;
+		color: rgba(255,255,255,0.6);
+	}
+
+	.msg_time{ left: 0; }
+	.msg_time_send{ right: 0; }
+
+	/* ✔✔ ticks */
+	.msg_status{
+		margin-left: 5px;
+		font-size: 12px;
+	}
+
+	.msg_status.seen{
+		color: #60a5fa;
+	}
+
+	/* typing dots */
+	.typing span{
+		height:8px;
+		width:8px;
+		background:white;
+		border-radius:50%;
+		display:inline-block;
+		margin:2px;
+		animation: blink 1.4s infinite;
+	}
+
+	.typing span:nth-child(2){animation-delay:0.2s;}
+	.typing span:nth-child(3){animation-delay:0.4s;}
+
+	@keyframes blink{
+		0%{opacity:0.2;}
+		20%{opacity:1;}
+		100%{opacity:0.2;}
+	}
+	</style>
+</head>
+
+<body>
+<div class="container-fluid h-100">
+	<div class="row justify-content-center h-100">
+		<div class="col-md-8 col-xl-6 chat">
+			<div class="card">
+
+				<div class="card-header msg_head">
+					<div class="d-flex bd-highlight">
+						<div class="img_cont">
+							<img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="user_img">
+							<span class="online_icon"></span>
 						</div>
-						<div id="messageFormeight" class="card-body msg_card_body">
-							
-							
-						</div>
-						<div class="card-footer">
-							<form id="messageArea" class="input-group">
-                                <input type="text" id="text" name="msg" placeholder="Type your message..." autocomplete="off" class="form-control type_msg" required/>
-								<div class="input-group-append">
-									<button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
-								</div>
-							</form>
+						<div class="ml-3 text-white">
+							<h5>Medical Chatbot</h5>
+							<p>Ask me anything!</p>
 						</div>
 					</div>
 				</div>
+
+				<div id="messageFormeight" class="card-body msg_card_body"></div>
+
+				<div class="card-footer">
+					<form id="messageArea" class="input-group">
+						<input type="text" id="text" name="msg" placeholder="Type message..." class="form-control type_msg" required>
+						<div class="input-group-append">
+							<button type="submit" class="input-group-text send_btn">
+								<i class="fas fa-location-arrow"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+
 			</div>
 		</div>
-		
-		<script>
-			$(document).ready(function() {
-				$("#messageArea").on("submit", function(event) {
-					const date = new Date();
-					const hour = date.getHours();
-					const minute = date.getMinutes();
-					const str_time = hour+":"+minute;
-					var rawText = $("#text").val();
+	</div>
+</div>
 
-					var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">'+ str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
-					
-					$("#text").val("");
-					$("#messageFormeight").append(userHtml);
+<script>
+$(document).ready(function(){
 
-					$.ajax({
-						data: {
-							msg: rawText,	
-						},
-						type: "POST",
-						url: "/get",
-					}).done(function(data) {
-						var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + data + '<span class="msg_time">' + str_time + '</span></div></div>';
-						$("#messageFormeight").append($.parseHTML(botHtml));
-					});
-					event.preventDefault();
-				});
-			});
-		</script>
-        
-    </body>
+	function scrollToBottom(){
+		let chatBox = document.getElementById("messageFormeight");
+		chatBox.scrollTop = chatBox.scrollHeight;
+	}
+
+	function getTime(){
+		let d = new Date();
+		let h = d.getHours();
+		let m = d.getMinutes();
+		m = m < 10 ? "0"+m : m;
+		return h+":"+m;
+	}
+
+	$("#messageArea").on("submit", function(e){
+		e.preventDefault();
+
+		let rawText = $("#text").val();
+		let time = getTime();
+
+		// USER MESSAGE
+		let userHtml = `
+		<div class="d-flex justify-content-end mb-4">
+			<div class="msg_cotainer_send">
+				${rawText}
+				<span class="msg_time_send">${time} <span class="msg_status">✔</span></span>
+			</div>
+			<img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="user_img_msg ml-2">
+		</div>`;
+
+		$("#text").val("");
+		$("#messageFormeight").append(userHtml);
+		scrollToBottom();
+
+		// typing
+		let typing = `
+		<div id="typing" class="d-flex mb-4">
+			<img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="user_img_msg mr-2">
+			<div class="msg_cotainer typing">
+				<span></span><span></span><span></span>
+			</div>
+		</div>`;
+		$("#messageFormeight").append(typing);
+		scrollToBottom();
+
+		// API call
+		$.ajax({
+			data:{msg: rawText},
+			type:"POST",
+			url:"/get",
+		}).done(function(data){
+
+			$("#typing").remove();
+
+			let botHtml = `
+			<div class="d-flex mb-4">
+				<img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="user_img_msg mr-2">
+				<div class="msg_cotainer">
+					${data}
+					<span class="msg_time">${time}</span>
+				</div>
+			</div>`;
+
+			$("#messageFormeight").append(botHtml);
+
+			$(".msg_status").last().html("✔✔").addClass("seen");
+
+			scrollToBottom();
+		});
+	});
+});
+</script>
+
+</body>
 </html>
