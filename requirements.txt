@@ -4,7 +4,7 @@ aiohttp-retry==2.9.1
 aiosignal==1.4.0
 annotated-types==0.7.0
 anyio==4.12.1
-asttokens @ file:///home/conda/feedstock_root/build_artifacts/asttokens_1763409923949/work
+asttokens==2.4.1   # or any stable version
 async-timeout==4.0.3
 attrs==25.4.0
 backports.asyncio.runner==1.2.0
