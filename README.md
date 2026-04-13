@@ -60,8 +60,10 @@ Flow:
 5.	User Query → Converted to Embedding 
 6.	Similar chunks retrieved from DB 
 7.	Context + Query → LLM (Groq API) 
-8.	Final Response generated 
-Architecture Components:
+8.	Final Response generated
+
+   
+### Architecture Components:
 •	Data Source: Medical PDF 
 •	Embedding Model: Sentence Transformers (via Hugging Face) 
 •	Vector Store: Pinecone 
