@@ -64,13 +64,13 @@ Flow:
 
    
 ### Architecture Components:
-•	Data Source: Medical PDF 
-•	Embedding Model: Sentence Transformers (via Hugging Face) 
-•	Vector Store: Pinecone 
-•	LLM: Groq API 
-•	Framework: LangChain 
-•	Backend: Flask 
-•	Deployment: AWS EC2 + AWS ECR + IAM  + Docker + CI/CD
+-	Data Source: Medical PDF 
+-	Embedding Model: Sentence Transformers (via Hugging Face) 
+-	Vector Store: Pinecone 
+-	LLM: Groq API 
+-	Framework: LangChain 
+-	Backend: Flask 
+-	Deployment: AWS EC2 + AWS ECR + IAM  + Docker + CI/CD
 
 
 ## 📂 Project Structure
