@@ -1,9 +1,10 @@
 # 🏥 Medical Chatbot (AI-Powered Healthcare Assistant)
 
 ## 📌 Project Overview
-The **Medical Chatbot** is an AI-powered web application designed to provide basic medical information, symptom analysis, and health-related guidance. It uses Natural Language Processing (NLP) and Large Language Models (LLMs) to interact with users in a conversational manner.
-
-This project helps users understand possible medical conditions and provides general health advice — **not a replacement for professional doctors**.
+The **Medical Chatbot** is an AI-powered healthcare assistant designed to provide basic medical information, symptom-based guidance, and conversational support using Natural Language Processing (NLP) and Large Language Models (LLMs). The system leverages a Retrieval-Augmented Generation (RAG) architecture to enhance response accuracy by combining pre-trained language models with a domain-specific medical knowledge base.
+The application integrates LangChain for workflow orchestration, Pinecone as a vector database for semantic search, and Flask for backend development. Sentence embeddings are generated using models from Hugging Face, enabling efficient similarity search. The chatbot is deployed using cloud and DevOps tools such as Amazon Web Services, Docker, and CI/CD pipelines.
+This system aims to assist users in understanding symptoms and accessing general medical knowledge while emphasizing that it is not a substitute for professional healthcare consultation.
+**.
 
 ---
 
@@ -49,6 +50,27 @@ This project helps users understand possible medical conditions and provides gen
 - Docker, Github Actions
 
 ---
+
+## Model Architecture 
+Architecture: Retrieval-Augmented Generation (RAG)
+Flow:
+1.	Medical PDF → Text Extraction 
+2.	Text → Chunking 
+3.	Chunking → Embeddings (Sentence Transformer) 
+4.	Embeddings → Stored in Vector DB (Pinecone) 
+5.	User Query → Converted to Embedding 
+6.	Similar chunks retrieved from DB 
+7.	Context + Query → LLM (Groq API) 
+8.	Final Response generated 
+Architecture Components:
+•	Data Source: Medical PDF 
+•	Embedding Model: Sentence Transformers (via Hugging Face) 
+•	Vector Store: Pinecone 
+•	LLM: Groq API 
+•	Framework: LangChain 
+•	Backend: Flask 
+•	Deployment: AWS EC2 + AWS ECR + IAM  + Docker + CI/CD
+
 
 ## 📂 Project Structure
 📦 Medical-Chatbot
