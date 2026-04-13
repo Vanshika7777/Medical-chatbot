@@ -42,6 +42,7 @@ This project helps users understand possible medical conditions and provides gen
 - LLM APIs (Groq)  
 - Embeddings & Vector Store
 - Pinecone
+- Hugging Face (Sentence Transformers)
 
 ### ☁️ Deployment
 - AWS
