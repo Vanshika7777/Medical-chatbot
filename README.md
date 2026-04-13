@@ -4,7 +4,6 @@
 The **Medical Chatbot** is an AI-powered healthcare assistant designed to provide basic medical information, symptom-based guidance, and conversational support using Natural Language Processing (NLP) and Large Language Models (LLMs). The system leverages a Retrieval-Augmented Generation (RAG) architecture to enhance response accuracy by combining pre-trained language models with a domain-specific medical knowledge base.
 The application integrates LangChain for workflow orchestration, Pinecone as a vector database for semantic search, and Flask for backend development. Sentence embeddings are generated using models from Hugging Face, enabling efficient similarity search. The chatbot is deployed using cloud and DevOps tools such as Amazon Web Services, Docker, and CI/CD pipelines.
 This system aims to assist users in understanding symptoms and accessing general medical knowledge while emphasizing that it is not a substitute for professional healthcare consultation.
-**.
 
 ---
 
